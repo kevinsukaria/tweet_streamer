@@ -2,7 +2,7 @@ runtime: python37
 
 
 env_variables:
-  CLOUD_SQL_CONNECTION_NAME: 'tweet-streamer-273219:asia-east1:tweet-streamer'
-  DB_USER: 'root'
-  DB_PASS: '123qweasd'
-  DB_NAME: 'tweets'
+  CLOUD_SQL_CONNECTION_NAME: tweet-streamer-273219:asia-east1:tweet-streamer
+  DB_USER: root
+  DB_PASS: 123qweasd
+  DB_NAME: tweets
