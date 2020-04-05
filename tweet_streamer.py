@@ -1,7 +1,6 @@
 import tweepy
-import dataset
+from queries import *
 from urllib3.exceptions import ProtocolError
-
 
 auth = tweepy.OAuthHandler('sTdMg4nUSf4brak6uuBOZJg4M', 'b8WQYukt00Kgl6kdTxMnx4OVlCTcD28EtsT4d2X9SOb9JomuRK')
 auth.set_access_token('1392363164-8tTU3tZByrZKVg2Sq7DP7kDSaN9CKkYkJGXhpzw',
@@ -13,9 +12,9 @@ api = tweepy.API(auth)
 class NewStreamListener(tweepy.StreamListener):
     def on_status(self, status):
         name = status.user.name
-        username = status.user.screen_name
-        followers = status.user.followers_count
+        username = '@' + status.user.screen_name
         user_location = status.user.location
+        followers = status.user.followers_count
         verified_status = status.user.verified
         profile_pic = status.user.profile_image_url_https
         if hasattr(status, "retweeted_status"):  # Check if Retweet
@@ -32,24 +31,25 @@ class NewStreamListener(tweepy.StreamListener):
         hashtags = str(status.entities['hashtags'])
         retweet_count = status.retweet_count
         favorite_count = status.favorite_count
-        created_at = status.created_at
+        created_at = str(status.created_at)
 
-        db = dataset.connect('sqlite:///tweets.db')
-        table = db["tweets_stream"]
-        table.insert(dict(
-            name=name,
-            username='@' + username,
-            user_location=user_location,
-            verified_status=verified_status,
-            followers=followers,
-            profile_pic=profile_pic,
-            tweet=tweet,
-            language=language,
-            hashtags=hashtags,
-            retweet_count=retweet_count,
-            favorite_count=favorite_count,
-            created_at=created_at))
-        db.close()
+        insert = (
+            name,
+            username,
+            user_location,
+            verified_status,
+            followers,
+            profile_pic,
+            tweet,
+            language,
+            hashtags,
+            retweet_count,
+            favorite_count,
+            created_at
+        )
+
+        table_insert(insert)
+        # print('insert successful')
 
     def on_error(self, status_code):
         if status_code == 420:
@@ -58,6 +58,7 @@ class NewStreamListener(tweepy.StreamListener):
 
     def on_exception(self, exception):
         return
+
 
 
 print('streaming start !')

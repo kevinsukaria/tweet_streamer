@@ -1,4 +1,4 @@
-import datetime as dt
+from pandas import to_datetime as dt
 import dash_html_components as html
 import dash_bootstrap_components as dbc
 
@@ -11,6 +11,7 @@ import dash_bootstrap_components as dbc
 #         self.follower = follower
 #         self.tweet = tweet
 #         self.created_at = created_at
+
 name_style = {
     'margin': '0',
     'margin-left': '0.5em',
@@ -44,7 +45,7 @@ def feed_content_generator(data):
     name = data.name.values[0]
     username = data.username.values[0]
     tweet = data.tweet.values[0]
-    created_at = dt.datetime.strptime(data.local_time.values[0], '%Y-%m-%d %H:%M:%S').strftime('%A %d %B %Y | %H:%M')
+    created_at = dt(data.local_time.values[0]).strftime('%A %d %B %Y | %H:%M')
     return dbc.CardBody([
         dbc.Row([
             html.Img(src=src, id='img-{}'.format(id), style=image_style),
