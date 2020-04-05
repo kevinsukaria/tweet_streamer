@@ -1,12 +1,19 @@
-import sqlalchemy
+import datetime
+import logging
+import os
+
+db_user = os.environ.get("DB_USER")
+db_pass = os.environ.get("DB_PASS")
+db_name = os.environ.get("DB_NAME")
+cloud_sql_connection_name = os.environ.get("CLOUD_SQL_CONNECTION_NAME")
 
 db = sqlalchemy.create_engine(
     sqlalchemy.engine.url.URL(
         drivername="mysql+pymysql",
-        username='root',
-        password='123qweasd',
-        database='tweets',
-        query={"unix_socket": "/cloudsql/tweet-streamer-273219:asia-east1:tweet-streamer"}))
+        username=db_user,
+        password=db_pass,
+        database=db_name,
+        query={"unix_socket": "/cloudsql/{}".format(cloud_sql_connection_name)},),)
 
 c = db.connect()
 
