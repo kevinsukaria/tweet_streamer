@@ -51,7 +51,6 @@ class NewStreamListener(tweepy.StreamListener):
             favorite_count=favorite_count,
             created_at=created_at))
         db.close()
-        print('tweet successfully added to the database')
 
     def on_error(self, status_code):
         if status_code == 420:
