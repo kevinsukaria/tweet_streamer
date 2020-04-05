@@ -37,7 +37,7 @@ latest_tweet_query = """
         from
             tweets_stream
         where
-            verified_status = 'True'
+            verified_status = True
         order by 
             created_at desc
         limit 5
