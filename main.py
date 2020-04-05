@@ -6,6 +6,7 @@ from dash.dependencies import Input, Output
 import dash_bootstrap_components as dbc
 import datetime as dt
 
+
 # =========================QUERIES============================
 from queries import *
 # =========================FUNCTION============================

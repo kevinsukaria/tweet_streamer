@@ -1,18 +1,15 @@
-import pymysql
+import sqlalchemy
 
-conn = pymysql.connect(host='localhost',
-                       user='root',
-                       password='123qweasd'
-                       )
-c = conn.cursor()
-c.execute("create database if not exists tweets")
+db = sqlalchemy.create_engine(
+    sqlalchemy.engine.url.URL(
+        drivername="mysql+pymysql",
+        username='root',
+        password='123qweasd',
+        database='tweets',
+        query={"unix_socket": "/cloudsql/tweet-streamer-273219:asia-east1:tweet-streamer"}))
 
-conn = pymysql.connect(host='localhost',
-                       user='root',
-                       password='123qweasd',
-                       database='tweets'
-                       )
-c = conn.cursor()
+c = db.connect()
+
 c.execute("""
     CREATE TABLE IF NOT EXISTS tweets_stream (
     name VARCHAR(255),
@@ -31,4 +28,3 @@ c.execute("""
     )
     """)
 
-conn.close()
