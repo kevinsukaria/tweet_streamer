@@ -9,7 +9,7 @@ db_name = os.environ.get("DB_NAME")
 cloud_sql_connection_name = os.environ.get("CLOUD_SQL_CONNECTION_NAME")
 
 db = sqlalchemy.create_engine(
-    sqlalchemy.engine.url.URL(
+    sqlalchemy.engine.URL(
         drivername="mysql+pymysql",
         username=db_user,
         password=db_pass,
