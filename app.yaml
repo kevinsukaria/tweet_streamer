@@ -1,5 +1,4 @@
 runtime: python37
-service:
 env_variables:
   CLOUD_SQL_CONNECTION_NAME: tweets-streamer:asia-east2:tweets-streamer
   DB_USER: root
