@@ -60,12 +60,12 @@ class NewStreamListener(tweepy.StreamListener):
         return
 
 
-
-print('streaming start !')
-stream_listener = NewStreamListener()
-stream = tweepy.Stream(auth=api.auth, listener=stream_listener)
-while True:
-    try:
-        stream.filter(track=['corona', 'virus', 'COVID-19'])
-    except (ProtocolError, AttributeError):
-        continue
+def start_stream():
+    print('streaming start !')
+    stream_listener = NewStreamListener()
+    stream = tweepy.Stream(auth=api.auth, listener=stream_listener)
+    while True:
+        try:
+            stream.filter(track=['corona', 'virus', 'COVID-19'])
+        except (ProtocolError, AttributeError):
+            continue

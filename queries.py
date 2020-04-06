@@ -1,9 +1,11 @@
 import pandas as pd
 import pymysql
+
 socket = '/cloudsql/tweets-streamer:asia-east2:tweets-streamer'
 
 def dataframe_creation(queries):
     conn = pymysql.connect(
+        # host='35.220.176.195',
         unix_socket=socket,
         user='root',
         password='123qweasd',
@@ -19,6 +21,7 @@ def dataframe_creation(queries):
 
 def db_clear(queries):
     conn = pymysql.connect(
+        # host='35.220.176.195',
         unix_socket=socket,
         user='root',
         password='123qweasd',
@@ -31,6 +34,7 @@ def db_clear(queries):
 
 def table_insert(lis):
     conn = pymysql.connect(
+        # host='35.220.176.195',
         unix_socket=socket,
         user='root',
         password='123qweasd',
@@ -69,7 +73,7 @@ query = """
         from
             tweets_stream
         where 
-            addtime(created_at,'7:00') > addtime(utc_timestamp(),'6:57')
+            addtime(created_at,'7:00') > addtime(utc_timestamp(),'6:56')
         group by 
             1,2
         """
