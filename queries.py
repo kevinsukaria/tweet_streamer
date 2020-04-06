@@ -1,32 +1,42 @@
 import pandas as pd
 import pymysql
-import sqlalchemy
-
-db = sqlalchemy.create_engine(
-    sqlalchemy.engine.url.URL(
-        drivername="mysql+pymysql",
-        username='root',
-        password='123qweasd',
-        database='tweets',
-        query={"unix_socket": "/cloudsql/tweet-streamer-273219:asia-east1:tweet-streamer"}))
-
+socket = '/cloudsql/tweet-streamer-273219:asia-east1:tweet-streamer'
 
 def dataframe_creation(queries):
-    c = db.connect()
+    conn = pymysql.connect(
+        unix_socket=socket,
+        user='root',
+        password='123qweasd',
+        database='tweets'
+    )
+    c = conn.cursor()
     c.execute(queries)
     data = c.fetchall()
+    conn.close()
     col = [val[0] for val in c.description]
     return pd.DataFrame(data=data, columns=col)
 
 
 def db_clear(queries):
-    c = db.connect()
+    conn = pymysql.connect(
+        unix_socket=socket,
+        user='root',
+        password='123qweasd',
+        database='tweets'
+    )
+    c = conn.cursor()
     c.execute(queries)
-
+    conn.close()
 
 
 def table_insert(lis):
-    c = db.connect()
+    conn = pymysql.connect(
+        unix_socket=socket,
+        user='root',
+        password='123qweasd',
+        database='tweets'
+    )
+    c = conn.cursor()
     c.execute(
         """
         insert into tweets_stream
@@ -47,26 +57,9 @@ def table_insert(lis):
         values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
         """, lis
     )
+    conn.commit()
+    conn.close()
 
-
-
-table_creation_query = """
-    CREATE TABLE IF NOT EXISTS tweets_stream (
-    name VARCHAR(255),
-    username VARCHAR(255),
-    user_location VARCHAR(255),
-    verified_status BOOLEAN,
-    followers INT,
-    profile_pic VARCHAR(255),
-    tweet VARCHAR(255),
-    language VARCHAR(255),
-    hashtags VARCHAR(255),
-    retweet_count INT,
-    favorite_count INT,
-    created_at VARCHAR(255)
-
-    )
-    """
 
 query = """
         select 

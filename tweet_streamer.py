@@ -49,7 +49,7 @@ class NewStreamListener(tweepy.StreamListener):
         )
 
         table_insert(insert)
-        # print('insert successful')
+        print('insert successful')
 
     def on_error(self, status_code):
         if status_code == 420:

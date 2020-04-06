@@ -1,22 +1,12 @@
-import sqlalchemy
-import datetime
-import logging
-import os
+import pymysql
 
-db_user = os.environ.get("DB_USER")
-db_pass = os.environ.get("DB_PASS")
-db_name = os.environ.get("DB_NAME")
-cloud_sql_connection_name = os.environ.get("CLOUD_SQL_CONNECTION_NAME")
-
-db = sqlalchemy.create_engine(
-    sqlalchemy.engine.url.URL(
-        drivername="mysql+pymysql",
-        username=db_user,
-        password=db_pass,
-        database=db_name,
-        query={"unix_socket": "/cloudsql/{}".format(cloud_sql_connection_name)},),)
-
-c = db.connect()
+conn = pymysql.connect(
+    unix_socket=socket,
+    user='root',
+    password='123qweasd',
+    database='tweets'
+)
+c = conn.cursor()
 
 c.execute("""
     CREATE TABLE IF NOT EXISTS tweets_stream (
@@ -35,4 +25,3 @@ c.execute("""
 
     )
     """)
-
