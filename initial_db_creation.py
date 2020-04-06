@@ -1,4 +1,6 @@
 import pymysql
+import os
+socket = os.path.join('/cloudsql', 'tweet-streamer-273219:asia-east1:tweet-streamer')
 
 conn = pymysql.connect(
     unix_socket=socket,
