@@ -2,33 +2,33 @@ import datetime
 import logging
 import os
 import sqlalchemy
-
+import pymysql
 # socket = os.path.join('/cloudsql', 'tweets-streamer:asia-east2:tweets-streamer')
 
-db_user = os.environ.get("DB_USER")
-db_pass = os.environ.get("DB_PASS")
-db_name = os.environ.get("DB_NAME")
-cloud_sql_connection_name = os.environ.get("CLOUD_SQL_CONNECTION_NAME")
+# db_user = os.environ.get("DB_USER")
+# db_pass = os.environ.get("DB_PASS")
+# db_name = os.environ.get("DB_NAME")
+# cloud_sql_connection_name = os.environ.get("CLOUD_SQL_CONNECTION_NAME")
 
-db = sqlalchemy.create_engine(
-    sqlalchemy.engine.url.URL(
-        drivername="mysql+pymysql",
-        username=db_user,
-        password=db_pass,
-        database=db_name,
-        query={"unix_socket": "/cloudsql/{}".format(cloud_sql_connection_name)},
-    ),)
+# db = sqlalchemy.create_engine(
+#     sqlalchemy.engine.url.URL(
+#         drivername="mysql+pymysql",
+#         username=db_user,
+#         password=db_pass,
+#         database=db_name,
+#         query={"unix_socket": "/cloudsql/{}".format(cloud_sql_connection_name)},
+#     ),)
 
 
-# conn = pymysql.connect(
-#     host = '35.220.176.195',
-#     # unix_socket=socket,
-#     user='root',
-#     password='123qweasd',
-#     database='tweets-streamer'
-# )
-# c = conn.cursor()
-c = db.connect()
+conn = pymysql.connect(
+    # host = '35.220.176.195',
+    # unix_socket=socket,
+    user='root',
+    password='123qweasd',
+    database='tweets'
+)
+c = conn.cursor()
+# c = db.connect()
 c.execute("""
     CREATE TABLE IF NOT EXISTS tweets_stream (
     name VARCHAR(255),
