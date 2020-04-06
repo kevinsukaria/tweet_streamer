@@ -1,6 +1,6 @@
 import pandas as pd
 import pymysql
-socket = '/cloudsql/tweet-streamer-273219:asia-east1:tweet-streamer'
+socket = '/cloudsql/tweets-streamer:asia-east2:tweets-streamer'
 
 def dataframe_creation(queries):
     conn = pymysql.connect(
