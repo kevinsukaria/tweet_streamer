@@ -3,7 +3,7 @@ import logging
 import os
 import sqlalchemy
 import pymysql
-# socket = os.path.join('/cloudsql', 'tweets-streamer:asia-east2:tweets-streamer')
+socket = os.path.join('/cloudsql', 'tweets-streamer:asia-east2:tweets-streamer')
 
 # db_user = os.environ.get("DB_USER")
 # db_pass = os.environ.get("DB_PASS")
@@ -22,7 +22,7 @@ import pymysql
 
 conn = pymysql.connect(
     # host = '35.220.176.195',
-    # unix_socket=socket,
+    unix_socket=socket,
     user='root',
     password='123qweasd',
     database='tweets'
