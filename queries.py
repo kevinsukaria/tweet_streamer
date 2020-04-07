@@ -1,56 +1,46 @@
 import pandas as pd
 import pymysql
-import sqlalchemy
 
 socket = '/cloudsql/tweets-streamer:asia-east2:tweets-streamer'
 
 def dataframe_creation(queries):
-    db = sqlalchemy.create_engine(
-        # Equivalent URL:
-        # mysql+pymysql://<db_user>:<db_pass>@/<db_name>?unix_socket=/cloudsql/<cloud_sql_instance_name>
-        sqlalchemy.engine.url.URL(
-            drivername="mysql+pymysql",
-            username='root',
-            password='123qweasd',
-            database='tweets',
-            query={"unix_socket": "/cloudsql/tweets-streamer:asia-east2:tweets-streamer"},
-        ),)
-    c = db.connect()
+    conn = pymysql.connect(
+        host='35.220.176.195',
+        # unix_socket=socket,
+        user='root',
+        password='123qweasd',
+        database='tweets'
+    )
+    c = conn.cursor()
     c.execute(queries)
     data = c.fetchall()
-    c.close()
+    conn.close()
     col = [val[0] for val in c.description]
     return pd.DataFrame(data=data, columns=col)
 
 
 def db_clear(queries):
-    db = sqlalchemy.create_engine(
-        # Equivalent URL:
-        # mysql+pymysql://<db_user>:<db_pass>@/<db_name>?unix_socket=/cloudsql/<cloud_sql_instance_name>
-        sqlalchemy.engine.url.URL(
-            drivername="mysql+pymysql",
-            username='root',
-            password='123qweasd',
-            database='tweets',
-            query={"unix_socket": "/cloudsql/tweets-streamer:asia-east2:tweets-streamer"},
-        ), )
-    c = db.connect()
+    conn = pymysql.connect(
+        host='35.220.176.195',
+        # unix_socket=socket,
+        user='root',
+        password='123qweasd',
+        database='tweets'
+    )
+    c = conn.cursor()
     c.execute(queries)
-    c.close()
+    conn.close()
 
 
 def table_insert(lis):
-    db = sqlalchemy.create_engine(
-        # Equivalent URL:
-        # mysql+pymysql://<db_user>:<db_pass>@/<db_name>?unix_socket=/cloudsql/<cloud_sql_instance_name>
-        sqlalchemy.engine.url.URL(
-            drivername="mysql+pymysql",
-            username='root',
-            password='123qweasd',
-            database='tweets',
-            query={"unix_socket": "/cloudsql/tweets-streamer:asia-east2:tweets-streamer"},
-        ), )
-    c = db.connect()
+    conn = pymysql.connect(
+        host='35.220.176.195',
+        # unix_socket=socket,
+        user='root',
+        password='123qweasd',
+        database='tweets'
+    )
+    c = conn.cursor()
     c.execute(
         """
         insert into tweets_stream
@@ -71,8 +61,9 @@ def table_insert(lis):
         values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
         """, lis
     )
-    c.commit()
-    c.close()
+    conn.commit()
+    conn.close()
+
 
 query = """
         select 

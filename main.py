@@ -105,7 +105,6 @@ def start_app():
     external_stylesheets = [dbc.themes.SUPERHERO]
 
     app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
-    server = app.server
 
     app.layout = dbc.Container(
         fluid=True,
@@ -274,7 +273,7 @@ def start_app():
         db_clear(delete_query)
         return {'display': 'none'}
 
-    app.run_server(debug=True)
+    app.run_server(host="127.0.0.1", port=8080,debug=True)
 
 if __name__ == '__main__':
     p1 = Process(target=start_app)
