@@ -40,11 +40,11 @@ average_tweets = round(df.tweet_count.mean(), 2)
 user = f'{user_count.distinct_user.max():,}'
 tweet_per_user = round(user_count.total_count.sum() / user_count.distinct_user.max(), 2)
 
-fig = px.line(
+fig = px.area(
     df,
     x="created_at",
     y="tweet_count",
-    # color="Status",
+    color="Status",
     range_x=[x_min, x_max],
     # range_y=[0, df.tweet_count.max() * 1.2],
 )
@@ -59,11 +59,11 @@ fig.update_layout(
     }
 )
 
-bar_fig = px.line(
+bar_fig = px.bar(
     df_hour,
     x="hour",
     y="tweet_count",
-    # color='Status',
+    color='Status',
     range_x=[-1, 25],
     # range_y=[0, 1.2 * df_hour.tweet_count.max()],
 )
@@ -123,7 +123,7 @@ app.layout = dbc.Container(
                    'padding': '0.5em 0'}),
         dcc.Interval(
             id='interval-component',
-            interval=2 * 1000,  # in milliseconds
+            interval=5 * 1000,  # in milliseconds
             n_intervals=0
         ),
         dcc.Interval(
@@ -153,7 +153,7 @@ app.layout = dbc.Container(
                                   dcc.Graph(
                                       id='line',
                                       figure=fig,
-                                      animate=False
+                                      animate=True
 
                                   )
                                   ]), style=card_style),
@@ -200,11 +200,11 @@ def update_graph(n):
     user = f'{user_count.distinct_user.max():,}'
     tweet_per_user = round(user_count.total_count.sum() / user_count.distinct_user.max(), 2)
 
-    fig = px.line(
+    fig = px.area(
         df,
         x="created_at",
         y="tweet_count",
-        # color='Status',
+        color='Status',
         range_x=[x_min, x_max],
         # range_y=[0, df.tweet_count.max() * 1.2],
     )
@@ -240,7 +240,7 @@ def update_feed(n):
         df_hour,
         x="hour",
         y="tweet_count",
-        # color='Status',
+        color='Status',
         range_x=[-1, 25],
         # range_y=[0, 1.2 * df_hour.tweet_count.max()],
     )

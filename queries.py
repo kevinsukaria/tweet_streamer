@@ -5,7 +5,7 @@ socket = '/cloudsql/tweets-streamer:asia-east2:tweets-streamer'
 
 def dataframe_creation(queries):
     conn = pymysql.connect(
-        # host='35.220.176.195',
+        # host='localhost',
         unix_socket=socket,
         user='root',
         password='123qweasd',
@@ -21,7 +21,7 @@ def dataframe_creation(queries):
 
 def db_clear(queries):
     conn = pymysql.connect(
-        # host='35.220.176.195',
+        # host='localhost',
         unix_socket=socket,
         user='root',
         password='123qweasd',
@@ -34,7 +34,7 @@ def db_clear(queries):
 
 def table_insert(lis):
     conn = pymysql.connect(
-        # host='35.220.176.195',
+        # host='localhost',
         unix_socket=socket,
         user='root',
         password='123qweasd',
@@ -69,7 +69,7 @@ query = """
         select 
             created_at,
             case when verified_status = 1 then 'Verified Users' else 'Un-Verified Users' end as Status,
-            count(*) as tweet_count
+            count(tweet) as tweet_count
         from
             tweets_stream
         where 

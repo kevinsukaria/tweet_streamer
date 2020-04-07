@@ -49,7 +49,7 @@ class NewStreamListener(tweepy.StreamListener):
         )
 
         table_insert(insert)
-        # print('insert successful')
+        print('insert successful')
 
     def on_error(self, status_code):
         if status_code == 420:
@@ -66,7 +66,11 @@ def start_stream():
     stream = tweepy.Stream(auth=api.auth, listener=stream_listener)
     while True:
         try:
-            stream.filter(track=['corona', 'virus', 'COVID-19'])
+            stream.filter(track=[
+                'corona',
+                'virus',
+                'COVID-19'
+            ])
         except (ProtocolError, AttributeError):
             continue
 

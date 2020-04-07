@@ -1,3 +1,6 @@
 runtime: python37
 service: streamer
 entrypoint: python tweet_streamer.py
+
+manual_scaling:
+  instances: 1
