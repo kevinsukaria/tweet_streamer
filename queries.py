@@ -5,8 +5,8 @@ socket = '/cloudsql/tweets-streamer:asia-east2:tweets-streamer'
 
 def dataframe_creation(queries):
     conn = pymysql.connect(
-        host='35.220.176.195',
-        # unix_socket=socket,
+        # host='35.220.176.195',
+        unix_socket=socket,
         user='root',
         password='123qweasd',
         database='tweets'
@@ -21,8 +21,8 @@ def dataframe_creation(queries):
 
 def db_clear(queries):
     conn = pymysql.connect(
-        host='35.220.176.195',
-        # unix_socket=socket,
+        # host='35.220.176.195',
+        unix_socket=socket,
         user='root',
         password='123qweasd',
         database='tweets'
@@ -34,8 +34,8 @@ def db_clear(queries):
 
 def table_insert(lis):
     conn = pymysql.connect(
-        host='35.220.176.195',
-        # unix_socket=socket,
+        # host='35.220.176.195',
+        unix_socket=socket,
         user='root',
         password='123qweasd',
         database='tweets'

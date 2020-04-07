@@ -10,6 +10,10 @@ from components import feed_content_generator
 from multiprocessing import Process
 from tweet_streamer import start_stream
 
+external_stylesheets = [dbc.themes.SUPERHERO]
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+
+
 def start_app():
     cardheader_style = {
         'font-size': '1em',
@@ -102,9 +106,9 @@ def start_app():
     latest_card3 = feed_content_generator(latest_tweet.iloc[[3]])
     latest_card4 = feed_content_generator(latest_tweet.iloc[[4]])
 
-    external_stylesheets = [dbc.themes.SUPERHERO]
 
-    app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+
+
 
     app.layout = dbc.Container(
         fluid=True,
@@ -273,11 +277,12 @@ def start_app():
         db_clear(delete_query)
         return {'display': 'none'}
 
-    app.run_server(host="127.0.0.1", port=8080,debug=True)
+
 
 if __name__ == '__main__':
     p1 = Process(target=start_app)
     p1.start()
+    app.run_server(host="127.0.0.1", port=8080, debug=True)
     p2 = Process(target=start_stream)
     p2.start()
 
