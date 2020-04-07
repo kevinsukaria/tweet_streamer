@@ -1,46 +1,56 @@
 import pandas as pd
 import pymysql
+import sqlalchemy
 
 socket = '/cloudsql/tweets-streamer:asia-east2:tweets-streamer'
 
 def dataframe_creation(queries):
-    conn = pymysql.connect(
-        # host='35.220.176.195',
-        unix_socket=socket,
-        user='root',
-        password='123qweasd',
-        database='tweets'
-    )
-    c = conn.cursor()
+    db = sqlalchemy.create_engine(
+        # Equivalent URL:
+        # mysql+pymysql://<db_user>:<db_pass>@/<db_name>?unix_socket=/cloudsql/<cloud_sql_instance_name>
+        sqlalchemy.engine.url.URL(
+            drivername="mysql+pymysql",
+            username='root',
+            password='123qweasd',
+            database='tweets',
+            query={"unix_socket": "/cloudsql/tweets-streamer:asia-east2:tweets-streamer"},
+        ),)
+    c = db.connect()
     c.execute(queries)
     data = c.fetchall()
-    conn.close()
+    c.close()
     col = [val[0] for val in c.description]
     return pd.DataFrame(data=data, columns=col)
 
 
 def db_clear(queries):
-    conn = pymysql.connect(
-        # host='35.220.176.195',
-        unix_socket=socket,
-        user='root',
-        password='123qweasd',
-        database='tweets'
-    )
-    c = conn.cursor()
+    db = sqlalchemy.create_engine(
+        # Equivalent URL:
+        # mysql+pymysql://<db_user>:<db_pass>@/<db_name>?unix_socket=/cloudsql/<cloud_sql_instance_name>
+        sqlalchemy.engine.url.URL(
+            drivername="mysql+pymysql",
+            username='root',
+            password='123qweasd',
+            database='tweets',
+            query={"unix_socket": "/cloudsql/tweets-streamer:asia-east2:tweets-streamer"},
+        ), )
+    c = db.connect()
     c.execute(queries)
-    conn.close()
+    c.close()
 
 
 def table_insert(lis):
-    conn = pymysql.connect(
-        # host='35.220.176.195',
-        unix_socket=socket,
-        user='root',
-        password='123qweasd',
-        database='tweets'
-    )
-    c = conn.cursor()
+    db = sqlalchemy.create_engine(
+        # Equivalent URL:
+        # mysql+pymysql://<db_user>:<db_pass>@/<db_name>?unix_socket=/cloudsql/<cloud_sql_instance_name>
+        sqlalchemy.engine.url.URL(
+            drivername="mysql+pymysql",
+            username='root',
+            password='123qweasd',
+            database='tweets',
+            query={"unix_socket": "/cloudsql/tweets-streamer:asia-east2:tweets-streamer"},
+        ), )
+    c = db.connect()
     c.execute(
         """
         insert into tweets_stream
@@ -61,9 +71,8 @@ def table_insert(lis):
         values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
         """, lis
     )
-    conn.commit()
-    conn.close()
-
+    c.commit()
+    c.close()
 
 query = """
         select 
