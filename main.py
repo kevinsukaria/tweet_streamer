@@ -12,6 +12,7 @@ from tweet_streamer import start_stream
 
 external_stylesheets = [dbc.themes.SUPERHERO]
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+server = app.server
 
 cardheader_style = {
     'font-size': '1em',
