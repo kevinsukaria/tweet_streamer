@@ -9,10 +9,11 @@ from queries import *
 from components import feed_content_generator
 from multiprocessing import Process
 from tweet_streamer import start_stream
+from flask import Flask
 
+server = Flask(__name__)
 external_stylesheets = [dbc.themes.SUPERHERO]
-dash_app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
-app = dash_app.server
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets,server=server)
 
 cardheader_style = {
     'font-size': '1em',

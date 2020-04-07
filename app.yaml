@@ -1,7 +1,3 @@
 runtime: python37
-entrypoint: gunicorn -b :8080 main:app
-env_variables:
-  CLOUD_SQL_CONNECTION_NAME: tweets-streamer:asia-east2:tweets-streamer
-  DB_USER: root
-  DB_PASS: 123qweasd
-  DB_NAME: tweets
+
+entrypoint: gunicorn -b :$PORT main:server
