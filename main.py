@@ -11,9 +11,10 @@ from multiprocessing import Process
 from tweet_streamer import start_stream
 from flask import Flask
 
-server = Flask(__name__)
+# server = Flask(__name__)
 external_stylesheets = [dbc.themes.SUPERHERO]
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets,server=server)
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+server = app.server
 
 cardheader_style = {
     'font-size': '1em',
@@ -277,6 +278,6 @@ def clear_db(n):
 if __name__ == '__main__':
     # p1 = Process(target=start_app)
     # p1.start()
-    dash_app.run_server(debug=True)
+    app.run_server(debug=True)
     # p2 = Process(target=start_stream)
     # p2.start()
