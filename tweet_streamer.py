@@ -1,7 +1,6 @@
 import tweepy
 from queries import *
 from urllib3.exceptions import ProtocolError
-from flask import Flask
 
 auth = tweepy.OAuthHandler('sTdMg4nUSf4brak6uuBOZJg4M', 'b8WQYukt00Kgl6kdTxMnx4OVlCTcD28EtsT4d2X9SOb9JomuRK')
 auth.set_access_token('1392363164-8tTU3tZByrZKVg2Sq7DP7kDSaN9CKkYkJGXhpzw',
