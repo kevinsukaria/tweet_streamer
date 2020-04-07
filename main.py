@@ -7,8 +7,6 @@ import dash_bootstrap_components as dbc
 import datetime as dt
 from queries import *
 from components import feed_content_generator
-from multiprocessing import Process
-from tweet_streamer import start_stream
 
 external_stylesheets = [dbc.themes.SUPERHERO]
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
@@ -274,13 +272,5 @@ def clear_db(n):
     return {'display': 'none'}
 
 
-def start_app():
-    app.run_server(debug=True)
-
-
 if __name__ == '__main__':
-    p1 = Process(target=start_app)
-    p1.start()
-
-    p2 = Process(target=start_stream)
-    p2.start()
+    app.run_server(debug=True)
