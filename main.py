@@ -11,8 +11,8 @@ from multiprocessing import Process
 from tweet_streamer import start_stream
 
 external_stylesheets = [dbc.themes.SUPERHERO]
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
-server = app.server
+dash_app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+app = dash_app.server
 
 cardheader_style = {
     'font-size': '1em',
@@ -276,6 +276,6 @@ def clear_db(n):
 if __name__ == '__main__':
     # p1 = Process(target=start_app)
     # p1.start()
-    app.run_server(host="127.0.0.1", port=8080, debug=True)
+    dash_app.run_server(debug=True)
     # p2 = Process(target=start_stream)
     # p2.start()
